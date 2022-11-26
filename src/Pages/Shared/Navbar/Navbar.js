@@ -7,10 +7,16 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Navbar = () => {
 
-    // const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
+    }
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.error(error))
     }
 
     const navigation = [
@@ -35,13 +41,11 @@ const Navbar = () => {
     const navList = (
 
         <ul className="flex space-x-4">
-            {/* {
-                user?.email ? <>
-                    <li><Link to="/login" className={navClass}>Log Out</Link></li>
-                </> : <li><Link to="/login" className={navClass}>Log In</Link></li>
-            } */}
-
-
+            <li>
+                {
+                    user?.email ? <button onClick={handleLogOut}><Link to="/login" className={navClass}>Log Out</Link></button> : <Link to="/login" className={navClass}>Log In</Link>
+                }
+            </li>
         </ul>
     )
 
