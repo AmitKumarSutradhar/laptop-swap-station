@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+import logo from "../../../assets/images/logo.png"
 
 
 const Navbar = () => {
@@ -34,13 +35,16 @@ const Navbar = () => {
         }
     ]
 
-    const navClass = ('text-white');
-    // const navClass = (`item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-    //                                         'block px-3 py-2 rounded-md text-base font-medium'`);
+    const navClass = 'text-white';
 
     const navList = (
-
         <ul className="flex space-x-4">
+            <li>
+                <Link to='/' className={navClass}>Home</Link>
+            </li>
+            <li>
+                <Link to='/blog' className={navClass}>Blog</Link>
+            </li>
             <li>
                 {
                     user?.email ? <button onClick={handleLogOut}><Link to="/login" className={navClass}>Log Out</Link></button> : <Link to="/login" className={navClass}>Log In</Link>
@@ -58,6 +62,7 @@ const Navbar = () => {
                         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                             <div className="relative flex h-16 items-center justify-between">
                                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+
                                     {/* Mobile menu button*/}
                                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                                         <span className="sr-only">Open main menu</span>
@@ -72,12 +77,13 @@ const Navbar = () => {
                                     <div className="flex flex-shrink-0 items-center">
                                         <img
                                             className="block h-8 w-auto lg:hidden"
-                                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                            src={logo}
+                                            // src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                                             alt="Your Company"
                                         />
                                         <img
                                             className="hidden h-8 w-auto lg:block"
-                                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                            src={logo}
                                             alt="Your Company"
                                         />
                                     </div>
