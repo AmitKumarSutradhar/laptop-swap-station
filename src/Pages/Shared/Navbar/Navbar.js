@@ -1,9 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom';
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 
 const Navbar = () => {
+
+    // const { user, logOut } = useContext(AuthContext);
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
@@ -15,14 +19,31 @@ const Navbar = () => {
             href: '/'
         },
         {
-            name: 'Blog',
-            href: '/'
+            name: 'Log In',
+            href: '/login'
         },
         {
-            name: 'Contact',
-            href: '/'
+            name: 'Sign Up',
+            href: '/register'
         }
     ]
+
+    const navClass = ('text-white');
+    // const navClass = (`item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+    //                                         'block px-3 py-2 rounded-md text-base font-medium'`);
+
+    const navList = (
+
+        <ul className="flex space-x-4">
+            {/* {
+                user?.email ? <>
+                    <li><Link to="/login" className={navClass}>Log Out</Link></li>
+                </> : <li><Link to="/login" className={navClass}>Log In</Link></li>
+            } */}
+
+
+        </ul>
+    )
 
     return (
         <div className=' bg-gray-800'>
@@ -71,6 +92,9 @@ const Navbar = () => {
                                                     {item.name}
                                                 </a>
                                             ))}
+                                            {
+                                                navList
+                                            }
                                         </div>
                                     </div>
                                 </div>
