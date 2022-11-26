@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
-import SingleCategoryDetails from './SingleCategory/SingleCategoryDetails';
+import SingleCategoryDetails from './SingleCategoryDetails';
 
 const SingleCategory = () => {
     const categoryProducts = useLoaderData();
