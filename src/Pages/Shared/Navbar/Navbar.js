@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
@@ -9,6 +9,25 @@ import logo from "../../../assets/images/logo.png"
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
+    // console.log(user?.email);
+
+    const [adminRole, setAdminRole] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/admin/${user?.email}`)
+            .then(res => res.json())
+            .then(data => setAdminRole(data))
+    }, [user?.email]);
+
+    // console.log(adminRole);
+
+    const [sellerRole, setSellerRole] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/seller/${user?.email}`)
+            .then(res => res.json())
+            .then(data => setSellerRole(data))
+    }, [user?.email]);
+
+    // console.log(sellerRole.isSeller);
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
@@ -28,10 +47,6 @@ const Navbar = () => {
         {
             name: 'Log In',
             href: '/login'
-        },
-        {
-            name: 'Sign Up',
-            href: '/register'
         }
     ]
 
@@ -44,6 +59,15 @@ const Navbar = () => {
             </li>
             <li>
                 <Link to='/blog' className={navClass}>Blog</Link>
+            </li>
+            <li>
+                {
+                    user && adminRole.isAdmin && <Link to='/dashboard/admin' className={navClass}>Dashbord Admin</Link>
+                }
+                {
+                    user && sellerRole.isSeller && <Link to='/dashboard/seller' className={navClass}>Dashbord Seller</Link>
+                }
+
             </li>
             <li>
                 {

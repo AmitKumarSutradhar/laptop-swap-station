@@ -7,6 +7,8 @@ import SingleCategory from "../../Pages/Home/Categories/SingleCategory/SingleCat
 import Home from "../../Pages/Home/Home/Home";
 import LogIn from "../../Pages/Join/LogIn/LogIn";
 import Register from "../../Pages/Join/Register/Register";
+import Test from "../../Pages/Test.js/Test";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -38,19 +40,34 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register></Register>
+            },
+            {
+                path: "/test",
+                element: <Test></Test>
             }
         ]
     },
     {
         path: '/dashboard',
-        // element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
-        element: <DashboardLayout></DashboardLayout>,
-        // errorElement: <DisplayError></DisplayError>,
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <Error></Error>,
         children: [
-            // {
-            //     path: '/dashboard',
-            //     element: <MyAppointment></MyAppointment>
-            // },
+            {
+                path: '/dashboard',
+                element: <p>Hello, I am coming soon.</p>
+            },
+            {
+                path: '/dashboard/admin',
+                element: <p>Hello, I am Admin.</p>
+            },
+            {
+                path: '/dashboard/seller',
+                element: <p>Hello, I am Seller.</p>
+            },
+            {
+                path: '/dashboard/buyer',
+                element: <p>Hello, I am Buyer.</p>
+            },
             // {
             //     path: '/dashboard/allusers',
             //     element: <AdminRoute><AllUsers></AllUsers></AdminRoute>

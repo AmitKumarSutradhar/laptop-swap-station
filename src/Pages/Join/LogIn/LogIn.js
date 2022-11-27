@@ -7,10 +7,12 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 const LogIn = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { login, gitHubProviderLogin, providerLogin } = useContext(AuthContext);
+    const { login, gitHubProviderLogin, providerLogin, updateUser, user } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     // const [token] = useToken(loginUserEmail);
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    // const [token] = useToken(createdUserEmail);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -49,9 +51,38 @@ const LogIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+
+                const userInfo = {
+                    displayName: user.displayName
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        const role = "buyer";
+                        saveUser(user.displayName, user.email, role);
+                    })
+                    .catch(err => console.log(err));
             })
             .catch(error => console.error(error))
     }
+
+
+    const saveUser = (name, email, role) => {
+        const user = { name, email, role };
+        console.log(user);
+        fetch('http://localhost:5000/users', {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCreatedUserEmail(email);
+            })
+    }
+
+
 
 
     return (
@@ -85,7 +116,7 @@ const LogIn = () => {
                         {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div>
                 </form>
-                <p>New to Doctors Portal <Link className='text-secondary' to="/signup">Create new Account</Link></p>
+                <p>New to Doctors Portal <Link className='text-secondary' to="/register">Create new Account</Link></p>
                 <div className="divider">OR</div>
                 <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
             </div>
