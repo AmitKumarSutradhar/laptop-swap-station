@@ -9,7 +9,7 @@ import logo from "../../../assets/images/logo.png"
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
-    // console.log(user?.email);
+    // console.log(user);
 
     const [adminRole, setAdminRole] = useState([]);
     useEffect(() => {
@@ -18,8 +18,6 @@ const Navbar = () => {
             .then(data => setAdminRole(data))
     }, [user?.email]);
 
-    // console.log(adminRole);
-
     const [sellerRole, setSellerRole] = useState([]);
     useEffect(() => {
         fetch(`http://localhost:5000/users/seller/${user?.email}`)
@@ -27,7 +25,15 @@ const Navbar = () => {
             .then(data => setSellerRole(data))
     }, [user?.email]);
 
-    // console.log(sellerRole.isSeller);
+
+    const [buyerRole, setBuyerRole] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/buyer/${user?.email}`)
+            .then(res => res.json())
+            .then(data => setBuyerRole(data))
+    }, [user?.email]);
+
+    // console.log(buyerRole);
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
@@ -39,42 +45,53 @@ const Navbar = () => {
             .catch(error => console.error(error))
     }
 
-    const navigation = [
-        {
-            name: 'Home',
-            href: '/'
-        },
-        {
-            name: 'Log In',
-            href: '/login'
-        }
-    ]
+    // const navigation = [
+    //     {
+    //         name: 'Home',
+    //         href: '/'
+    //     },
+    //     {
+    //         name: 'Log In',
+    //         href: '/login'
+    //     }
+    // ]
 
     const navClass = 'text-white  hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
 
     const navList = (
-        <ul className="flex space-x-4 items-center justify-center">
+        <>
             <li>
                 <Link to='/' className={navClass}>Home</Link>
             </li>
             <li>
                 <Link to='/blog' className={navClass}>Blog</Link>
             </li>
-            <li>
-                {
-                    user && adminRole.isAdmin && <Link to='/dashboard/admin' className={navClass}>Dashbord Admin</Link>
-                }
-                {
-                    user && sellerRole.isSeller && <Link to='/dashboard/seller' className={navClass}>Dashbord Seller</Link>
-                }
 
-            </li>
+            {
+                user && adminRole.isAdmin && <>
+                    <Link to='/dashboard/admin' className={navClass}>Dashbord Admin</Link>
+                    {/* <li><Link to='/dashboard/seller' className={navClass}>Add a product</Link></li> */}
+                </>
+            }
+            {
+                user && sellerRole.isSeller && <>
+                    <li><Link to='/dashboard/seller' className={navClass}>Dashbord Seller</Link></li>
+                    {/* <li><Link to='/dashboard/seller' className={navClass}>Add a product</Link></li> */}
+                </>
+            }
+            {
+                user && buyerRole.isBuyer && <>
+                    <li><Link to='/dashboard/buyer' className={navClass}>Dashbord Buyer</Link></li>
+                    {/* <li><Link to='/dashboard/seller' className={navClass}>My Orders</Link></li> */}
+                </>
+            }
+
             <li>
                 {
                     user?.email ? <button onClick={handleLogOut}><Link to="/login" className={navClass}>Log Out</Link></button> : <Link to="/login" className={navClass}>Log In</Link>
                 }
             </li>
-        </ul>
+        </>
     )
 
     return (
@@ -127,9 +144,12 @@ const Navbar = () => {
                                                     {item.name}
                                                 </a>
                                             ))} */}
-                                            {
-                                                navList
-                                            }
+                                            <ul className="flex space-x-4 items-center justify-center">
+                                                {
+                                                    navList
+                                                }
+                                            </ul>
+
                                         </div>
                                     </div>
                                 </div>
@@ -204,7 +224,7 @@ const Navbar = () => {
 
                         <Disclosure.Panel className="sm:hidden">
                             <div className="space-y-1 px-2 pt-2 pb-3">
-                                {navigation.map((item) => (
+                                {/* {navigation.map((item) => (
                                     <Disclosure.Button
                                         key={item.name}
                                         as="a"
@@ -217,7 +237,14 @@ const Navbar = () => {
                                     >
                                         {item.name}
                                     </Disclosure.Button>
-                                ))}
+                                ))} */}
+
+                                <ul className="flex flex-col space-x-4 items-center justify-center">
+                                    {
+                                        navList
+                                    }
+                                </ul>
+
                             </div>
                         </Disclosure.Panel>
                     </>

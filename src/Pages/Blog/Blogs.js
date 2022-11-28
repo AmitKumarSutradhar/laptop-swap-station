@@ -15,9 +15,9 @@ const Blogs = () => {
         <div>
             <h2 className='text-3xl text-center mt-5'>Welcome to Laptop Swap Sation blog.</h2>
 
-            <section class="text-gray-600 body-font">
-                <div class="container px-5 py-24 mx-auto">
-                    <div class="flex flex-wrap -m-4">
+            <section className="text-gray-600 body-font">
+                <div className="container px-5 py-24 mx-auto">
+                    <div className="flex flex-wrap -m-4">
                         {
                             blogs.map(blog => <BlogsDetails
                                 key={blog.id}

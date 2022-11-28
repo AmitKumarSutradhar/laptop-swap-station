@@ -91,6 +91,7 @@ const LogIn = () => {
             <div className='w-96 p-7 mx-auto'>
                 <h2 className='text-xl text-center'>Login</h2>
                 <form onSubmit={handleSubmit(handleLogin)}>
+
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Email</span></label>
                         <input type="text"
@@ -100,6 +101,7 @@ const LogIn = () => {
                             className="input input-bordered w-full max-w-xs" />
                         {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
                     </div>
+
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Password</span></label>
                         <input type="password"
