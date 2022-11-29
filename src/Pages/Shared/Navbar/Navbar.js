@@ -13,14 +13,16 @@ const Navbar = () => {
 
     const [adminRole, setAdminRole] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/users/admin/${user?.email}`)
+        // fetch(`http://localhost:5000/users/admin/${user?.email}`)
+        fetch(`https://swap-station-server.vercel.app/users/admin/${user?.email}`)
             .then(res => res.json())
             .then(data => setAdminRole(data))
     }, [user?.email]);
 
     const [sellerRole, setSellerRole] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/users/seller/${user?.email}`)
+        // fetch(`http://localhost:5000/users/seller/${user?.email}`)
+        fetch(`https://swap-station-server.vercel.app/users/seller/${user?.email}`)
             .then(res => res.json())
             .then(data => setSellerRole(data))
     }, [user?.email]);
@@ -28,7 +30,8 @@ const Navbar = () => {
 
     const [buyerRole, setBuyerRole] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/users/buyer/${user?.email}`)
+        // fetch(`http://localhost:5000/users/buyer/${user?.email}`)
+        fetch(`https://swap-station-server.vercel.app/users/buyer/${user?.email}`)
             .then(res => res.json())
             .then(data => setBuyerRole(data))
     }, [user?.email]);

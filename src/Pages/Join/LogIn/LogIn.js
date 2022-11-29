@@ -69,7 +69,8 @@ const LogIn = () => {
     const saveUser = (name, email, role) => {
         const user = { name, email, role };
         console.log(user);
-        fetch('http://localhost:5000/users', {
+        // fetch('http://localhost:5000/users', {
+        fetch('https://swap-station-server.vercel.app/users', {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -98,7 +99,7 @@ const LogIn = () => {
                             {...register("email", {
                                 required: "Email Address is required"
                             })}
-                            className="input input-bordered w-full max-w-xs" />
+                            className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                         {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
                     </div>
 
@@ -109,18 +110,17 @@ const LogIn = () => {
                                 required: "Password is required",
                                 minLength: { value: 6, message: 'Password must be 6 characters or longer' }
                             })}
-                            className="input input-bordered w-full max-w-xs" />
-                        <label className="label"> <span className="label-text">Forget Password?</span></label>
+                            className="relative block w-full appearance-none rounded-none rounded-t-md  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    <input className='btn btn-accent w-full' value="Login" type="submit" />
+                    <input className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 bg-indigo-500 my-3 text-white placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm' value="Login" type="submit" />
                     <div>
                         {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div>
                 </form>
-                <p>New to Doctors Portal <Link className='text-secondary' to="/register">Create new Account</Link></p>
-                <div className="divider">OR</div>
-                <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+                <p className='text-center'>New to Laptop Swap Station? <Link className='text-secondary' to="/register">Create new Account</Link></p>
+                <div className="divider text-center">OR</div>
+                <button onClick={handleGoogleSignIn} className='btn btn-outline w-full bg-indigo-500 p-2 my-2 text-white'>CONTINUE WITH GOOGLE</button>
             </div>
 
 

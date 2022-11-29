@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import Main from "../../Layout/Main/Main";
 import Error from "../../Pages/404/Error";
+import AddProducts from "../../Pages/AddProducts/AddProducts";
+import AllBuyers from "../../Pages/AllBuyers/AllBuyers";
+import AllSellers from "../../Pages/AllSellers/AllSellers";
 import Blogs from "../../Pages/Blog/Blogs";
 import SingleCategory from "../../Pages/Home/Categories/SingleCategory/SingleCategory";
 import Home from "../../Pages/Home/Home/Home";
@@ -31,7 +34,8 @@ const router = createBrowserRouter([
             {
                 path: '/category/:id',
                 element: <SingleCategory></SingleCategory>,
-                loader: ({ params }) => fetch(`http://localhost:5000/category?category_id=${params.id}`)
+                // loader: ({ params }) => fetch(`http://localhost:5000/category?category_id=${params.id}`)
+                loader: ({ params }) => fetch(`https://swap-station-server.vercel.app/category?category_id=${params.id}`)
             },
             {
                 path: '/login',
@@ -53,10 +57,6 @@ const router = createBrowserRouter([
         errorElement: <Error></Error>,
         children: [
             {
-                path: '/dashboard',
-                element: <p>Hello, I am coming soon.</p>
-            },
-            {
                 path: '/dashboard/admin',
                 element: <p>Hello, I am Admin.</p>
             },
@@ -65,17 +65,22 @@ const router = createBrowserRouter([
                 element: <p>Hello, I am Seller.</p>
             },
             {
+                path: '/dashboard/seller/addproduct',
+                element: <AddProducts></AddProducts>
+            },
+            {
                 path: '/dashboard/buyer',
                 element: <p>Hello, I am Buyer.</p>
             },
-            // {
-            //     path: '/dashboard/allusers',
-            //     element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
-            // },
-            // {
-            //     path: '/dashboard/adddoctor',
-            //     element: <AdminRoute><AddDoctor></AddDoctor></AdminRoute>
-            // },
+            {
+                path: '/dashboard/admin/allsellers',
+                // element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+                element: <AllSellers></AllSellers>
+            },
+            {
+                path: '/dashboard/admin/allbuyers',
+                element: <AllBuyers></AllBuyers>
+            },
             // {
             //     path: '/dashboard/managedoctors',
             //     element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
