@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Contexts/AuthProvider/AuthProvider';
 import AllBuyerDetails from './AllBuyerDetails';
@@ -5,13 +6,20 @@ import AllBuyerDetails from './AllBuyerDetails';
 const AllBuyers = () => {
     const { user } = useContext(AuthContext);
 
-    const [allBuyers, setAllBuyers] = useState([]);
-    useEffect(() => {
-        fetch(`http://localhost:5000/users/role?role=buyer`)
-            // fetch(`https://swap-station-server.vercel.app/users/role?role=buyer`)
-            .then(res => res.json())
-            .then(data => setAllBuyers(data))
-    }, [user?.email]);
+    // React Query Used
+    const { data: allBuyers, isLoading } = useQuery({
+        queryKey: ['buyer'],
+        queryFn: async () => {
+            // const res = await fetch(`https://swap-station-server.vercel.app/users/role?role=buyer`);
+            const res = await fetch(`http://localhost:5000/users/role?role=buyer`);
+            const data = await res.json();
+            return data;
+        }
+    })
+
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
     return (
         <div><section class="text-gray-600 body-font">
@@ -33,6 +41,7 @@ const AllBuyers = () => {
                         </thead>
                         <tbody>
                             {allBuyers.map(buyers => <AllBuyerDetails
+                                key={buyers._id}
                                 buyers={buyers}
                             ></AllBuyerDetails>)}
                         </tbody>

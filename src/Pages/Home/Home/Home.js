@@ -6,7 +6,6 @@ import Categories from '../Categories/Categories/Categories';
 const Home = () => {
     return (
         <div>
-            {/* <h2 className='text-red-400'>Hello from home</h2> */}
             {/* <Carosual></Carosual> */}
             <Banner></Banner>
             <Categories></Categories>

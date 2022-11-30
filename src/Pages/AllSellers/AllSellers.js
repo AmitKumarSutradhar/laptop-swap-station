@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Contexts/AuthProvider/AuthProvider';
 import AllSellerDetails from './AllSellerDetails';
@@ -5,13 +6,29 @@ import AllSellerDetails from './AllSellerDetails';
 const AllSellers = () => {
     const { user } = useContext(AuthContext);
 
-    const [allSeller, setSellers] = useState([]);
-    useEffect(() => {
-        fetch('http://localhost:5000/users/role?role=seller')
-            // fetch(`https://swap-station-server.vercel.app/users/role?role=buyer`)
-            .then(res => res.json())
-            .then(data => setSellers(data))
-    }, [user?.email]);
+    // const [allSeller, setSellers] = useState([]);
+    // useEffect(() => {
+    //     // fetch('http://localhost:5000/users/role?role=seller')
+    //     fetch(`https://swap-station-server.vercel.app/users/role?role=buyer`)
+    //         .then(res => res.json())
+    //         .then(data => setSellers(data))
+    // }, [user?.email]);
+
+
+    // React Query Used
+    const { data: allSeller, isLoading } = useQuery({
+        queryKey: ['seller'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/users/role?role=seller`);
+            // const res = await fetch(`https://swap-station-server.vercel.app/users/role?role=seller`);
+            const data = await res.json();
+            return data;
+        }
+    })
+
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
     return (
         <div><section class="text-gray-600 body-font">

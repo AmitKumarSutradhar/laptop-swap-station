@@ -12,12 +12,12 @@ const Blogs = () => {
     }, []);
 
     return (
-        <div>
+        <div className='w-10/12 mx-auto'>
             <h2 className='text-3xl text-center mt-5'>Welcome to Laptop Swap Sation blog.</h2>
 
             <section className="text-gray-600 body-font">
                 <div className="container px-5 py-24 mx-auto">
-                    <div className="flex flex-wrap -m-4">
+                    <div className="grid grid-cols-1 -m-4">
                         {
                             blogs.map(blog => <BlogsDetails
                                 key={blog.id}

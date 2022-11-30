@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import CategoriesDetails from './CategoriesDetails';
 
 const Categories = () => {
-    const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-        // fetch('http://localhost:5000/categories')
-        fetch('https://swap-station-server.vercel.app/categories')
-            .then(res => res.json())
-            .then(data => setCategories(data))
-    }, []);
+    // React Query Used
+    const { data: categories, isLoading } = useQuery({
+        queryKey: ['category'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/categories');
+            // const res = await fetch('http://localhost:5000/categories');
+            const data = await res.json();
+            return data;
+        }
+    })
+
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
     return (
         <div className='w-10/12 mx-auto my-20'>
@@ -18,8 +25,9 @@ const Categories = () => {
             <div className="grid gap-10 md:grid-cols-4 grid-cols-1 my-10">
                 {
                     categories.map(category => <CategoriesDetails
+                        key={category._id}
                         category={category}
-                    ></CategoriesDetails>)
+                    >{category.name}</CategoriesDetails>)
                 }
             </div>
         </div>
